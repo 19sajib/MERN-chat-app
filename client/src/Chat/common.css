@@ -1,0 +1,16 @@
+.chat {
+  padding: 20px;
+}
+
+.chat__title {
+  width: 100vw;
+  padding: 20px;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  background-color: #74a4c0;
+  color: #f4f6f7;
+  box-shadow: 0 0 20px 0 #003a5c;
+}
