@@ -60,7 +60,7 @@ function App () {
               <Route path="/accountactivation/:token" component={AccountActivation}/>
               <Route path="/forget-password" exact component={ForgetPassword}/>
               <Route path="/reset-password/:token" component={ResetPassword}/>
-              <Route path="/chatDashboard" render={() => <ChatDashboard socket={socket} />} exact />
+              <Route path="/chat-dashboard" render={() => <ChatDashboard socket={socket} />} exact />
               <Route path="/chatroom/:id" render={() => <ChatRoom socket={socket} />} exact />
           </Switch>
       </Container>

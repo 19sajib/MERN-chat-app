@@ -6,11 +6,25 @@ const chatroomSchema = new mongoose.Schema({
     required: "Name is required!",
   },
   user: {
-        type: String,
+        type: [String],
+        default: [],
         required: true,
         ref: 'User',
     },
-  createdAt: { type: Date }
+  userName: {
+    type: [String],
+    default: [],
+     required: true
+  },
+  userAvatar: { 
+    type: [String],
+    default: []
+   },
+  lastMessageAt: { type: Date },
+  createdAt: { 
+    type: Date,
+    default: new Date()
+   },
 });
 
 const Chatroom = mongoose.model("Chatroom", chatroomSchema)

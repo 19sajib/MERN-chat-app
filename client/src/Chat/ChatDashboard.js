@@ -1,16 +1,25 @@
 import React from "react";
 import axios from "axios";
+import moment from "moment";
 import { Link } from "react-router-dom";
 import makeToast from "../Toaster";
+import { CssBaseline,Typography,Paper,List,
+  ListItem,ListItemAvatar,ListItemText,Button } from "@material-ui/core";
+import Avatar from '@material-ui/core/Avatar';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
+
 
 import { isAuthenticated } from '../auth/auth'
 
 import './common.css'
 
+import useStyles from './style';
+
 const ChatDashboard = (props) => {
 
-    const { user } = isAuthenticated()
-    const userId = user._id
+  const classes = useStyles();
+  const { user } = isAuthenticated()
+  const userId = user._id
 
   const [chatrooms, setChatrooms] = React.useState([]);
   const [chatroomName, setChatroomName] = React.useState("");
@@ -31,7 +40,7 @@ const ChatDashboard = (props) => {
     axios
       .post(
         "http://localhost:8080/chatroom",
-        { name: chatroomName, user: userId },
+        { name: chatroomName, user },
       )
       .then((res) => {
         setChatroomName("");
@@ -48,9 +57,13 @@ const ChatDashboard = (props) => {
   }, []);
 
   return (
-    <div className="card">
-      <div className="cardHeader">Chatrooms</div>
-      <div className="cardBody">
+    <React.Fragment>
+      <CssBaseline />
+      <Paper square className={classes.paper}>
+        <Typography className={classes.text} variant="h5" gutterBottom>
+          Inbox
+        </Typography>
+        <div className="cardBody">
         <div className="inputGroup">
           <label htmlFor="chatroomName">Chatroom Name</label>
           <input
@@ -63,18 +76,21 @@ const ChatDashboard = (props) => {
           />
         </div>
       </div>
-      <button onClick={addNewChatroom}>Create Chatroom</button>
-      <div className="chat">
+      <Button color="primary" variant="outlined" onClick={addNewChatroom}>Create Chatroom</Button>
+      <List className={classes.list}>
         {chatrooms.map((chatroom) => (
           <div key={chatroom._id} className="chat_title">
-            <Link to={"/chatroom/" + chatroom._id}>
-            <div>{chatroom.name}</div>
-              <div className="join">Join</div>
-            </Link>
+            <ListItem button component={Link} to={"/chatroom/" + chatroom._id} >
+            <ListItemAvatar>
+                  {chatroom?.userAvatar.map ((avatar) => <Avatar alt="sajib" src={avatar} />)}
+              </ListItemAvatar>
+            <ListItemText primary={chatroom.name} secondary={moment(chatroom.createdAt).format('LLLL')} />
+              </ListItem>
           </div>
         ))}
-      </div>
-    </div>
+      </List>
+      </Paper>
+    </React.Fragment>
   );
 };
 

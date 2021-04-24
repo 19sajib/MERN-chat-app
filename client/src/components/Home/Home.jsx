@@ -1,14 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from '@material-ui/core'
-
+import { Button, Typography } from '@material-ui/core'
+import { isAuthenticated } from '../../auth/auth'
 const Home = () => {
+    const { user } = isAuthenticated()
     return (
-        <div>
-            <Button component={Link} to="/chatDashboard" variant="contained" color="primary" >
+            user ?( 
+            <Button component={Link} to="/chat-dashboard" variant="contained" color="primary" >
                 Chat Dashbord
-            </Button>
-        </div>
+            </Button>) : (
+              <Typography variant="h6" >Please Log in, then you see the chat dashborad button!</Typography>  
+            )
+
     )
 }
 
